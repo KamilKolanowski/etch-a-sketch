@@ -1,8 +1,9 @@
 const board = document.querySelector(".board");
 const clearBtn = document.querySelector('.clear-button');
-const rainbowBtn = document.querySelector('.rainbow-mode');
+const submitBtn = document.querySelector('.submit');
+const inputSizeValue = document.querySelector('.input-size');
 
-function generateBoard(size) {
+function generateBoard(size=16) {
   for (let i = 0; i < size * size; i++) {
     const newDiv = document.createElement("div");
     newDiv.classList.add("square");
@@ -31,14 +32,17 @@ function clearBoard() {
   });
 }
 
-function rainbowMode() { 
-  // tbd;
+function getUserSize() { 
+  submitBtn.addEventListener('click', () => {
+    return inputSizeValue.value;
+  });
 }
 
 function etchASketch() {
-  generateBoard(26);
+  generateBoard(getUserSize());
   clearBoard();
   changeDivStyle();
+  console.log(getUserSize());
 }
 
 etchASketch();
