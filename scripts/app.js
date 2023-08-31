@@ -5,6 +5,7 @@ const submitBtn = document.querySelector('.submit');
 const inputSizeValue = document.querySelector('.input-size');
 const rainbowModeBtn = document.querySelector('.rainbow-mode');
 const resetColorBtn = document.querySelector('.reset-color');
+let colorMode = false;
 
 function generateBoard(size=16) {
     for (let i = 0; i < size * size; i++) {
@@ -39,11 +40,13 @@ function changePaintingColor() {
   rainbowModeBtn.addEventListener('click', () => {
     const color = generateRandomColor();
     changeDivStyle(color);
+    colorMode = true;
   });
 
   resetColorBtn.addEventListener('click', () => {
     const color = "black";
     changeDivStyle(color);
+    colorMode = false;
   })
 }
 
@@ -71,7 +74,8 @@ function drawUserSizeBoard() {
     // Generate board based on user size -> if user size less than 1, default = 1, 
     // else if user provide float number, it will round to the number above.
     generateBoard(userValue < 1 ? 1 : Math.ceil(userValue));
-    changeDivStyle();
+    const colorStyle = colorMode ? generateRandomColor() : "black";
+    changeDivStyle(colorStyle);
 
     inputSizeValue.value = '';
   });
