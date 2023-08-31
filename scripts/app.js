@@ -1,8 +1,6 @@
 const board = document.querySelector(".board");
 const clearBtn = document.querySelector('.clear-button');
-const size8 = document.querySelector('.rainbow-mode');
-// const rainbowBtn = document.querySelector('.rainbow-mode');
-// const rainbowBtn = document.querySelector('.rainbow-mode');
+const rainbowBtn = document.querySelector('.rainbow-mode');
 
 function generateBoard(size) {
   for (let i = 0; i < size * size; i++) {
@@ -10,22 +8,12 @@ function generateBoard(size) {
     newDiv.classList.add("square");
     board.appendChild(newDiv);
 
-    // newSize = size / 16;
-    // if (size === 8) {
-    //   newDiv.style.padding = "2rem";
-    // }
-    // else if (size === 16) {
-    //   newDiv.style.padding = "1rem";
-    // }
-    // else if (size === 32) {
-    //   newDiv.style.padding = "0.5rem";
-    // }
-
-    newSize = size / 16;
-    newDiv.style.padding = `${newSize}rem`;
+    newSize = board.offsetWidth / size;
+    newDiv.style.minWidth = `${newSize}px`;
+    newDiv.style.minHeight = `${newSize}px`;
   }
 }
-
+console.log(`${board.offsetWidth} / 16`);
 function changeDivStyle() {
   const squares = document.getElementsByClassName("square");
   for (let div of squares) {
@@ -35,10 +23,6 @@ function changeDivStyle() {
   }
 }
 
-// function changeBoardSize() {
-
-// }
-
 function clearBoard() {
   clearBtn.addEventListener('click', () => {
     for (let square of board.children) {
@@ -47,8 +31,12 @@ function clearBoard() {
   });
 }
 
+function rainbowMode() { 
+  // tbd;
+}
+
 function etchASketch() {
-  generateBoard(16);
+  generateBoard(26);
   clearBoard();
   changeDivStyle();
 }
