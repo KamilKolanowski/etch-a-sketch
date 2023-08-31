@@ -4,8 +4,9 @@ const clearBtn = document.querySelector('.clear-button');
 const submitBtn = document.querySelector('.submit');
 const inputSizeValue = document.querySelector('.input-size');
 const rainbowModeBtn = document.querySelector('.rainbow-mode');
+const resetColorBtn = document.querySelector('.reset-color');
 
-function generateBoard(size) {
+function generateBoard(size=16) {
     for (let i = 0; i < size * size; i++) {
       const newDiv = document.createElement("div");
       newDiv.classList.add("square");
@@ -21,7 +22,7 @@ function changeDivStyle(color="black") {
   for (let div of squares) {
     div.addEventListener("mouseover", (e) => {
       const squareStyle = e.target;
-      color === 'black' ? squareStyle.style.backgroundColor = "black" : squareStyle.style.backgroundColor= generateRandomColor();
+      color === 'black' ? squareStyle.style.backgroundColor = "black" : squareStyle.style.backgroundColor = generateRandomColor();
     });
   }
 }
@@ -39,6 +40,11 @@ function changePaintingColor() {
     const color = generateRandomColor();
     changeDivStyle(color);
   });
+
+  resetColorBtn.addEventListener('click', () => {
+    const color = "black";
+    changeDivStyle(color);
+  })
 }
 
 function clearBoard() {
@@ -60,9 +66,11 @@ function drawUserSizeBoard() {
       board.removeChild(board.lastChild);
     }
 
-    const userValue = inputSizeValue.value;
-    
-    generateBoard(userValue);
+    let userValue = inputSizeValue.value;
+
+    // Generate board based on user size -> if user size less than 1, default = 1, 
+    // else if user provide float number, it will round to the number above.
+    generateBoard(userValue < 1 ? 1 : Math.ceil(userValue));
     changeDivStyle();
 
     inputSizeValue.value = '';
@@ -71,7 +79,7 @@ function drawUserSizeBoard() {
 
 function etchASketch() {
   clearBoardListener();
-  generateBoard(16);
+  generateBoard();
   drawUserSizeBoard();
   changePaintingColor()
   clearBoard();
@@ -79,4 +87,3 @@ function etchASketch() {
 }
 
 etchASketch();
-generateRandomColor()
