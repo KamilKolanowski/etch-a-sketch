@@ -14,7 +14,7 @@ function generateBoard(size=16) {
     newDiv.style.minHeight = `${newSize}px`;
   }
 }
-console.log(`${board.offsetWidth} / 16`);
+
 function changeDivStyle() {
   const squares = document.getElementsByClassName("square");
   for (let div of squares) {
@@ -25,24 +25,29 @@ function changeDivStyle() {
 }
 
 function clearBoard() {
-  clearBtn.addEventListener('click', () => {
     for (let square of board.children) {
       square.style.backgroundColor = null;
     }
-  });
+}
+
+function clearBoardListener() {
+  clearBtn.addEventListener('click', () => clearBoard());
+  submitBtn.addEventListener('click', () => clearBoard());
 }
 
 function getUserSize() { 
   submitBtn.addEventListener('click', () => {
-    return inputSizeValue.value;
+    clearBoardListener();
+    // generateBoard(size)
   });
 }
 
 function etchASketch() {
-  generateBoard(getUserSize());
+  clearBoardListener();
+  generateBoard(16);
+  getUserSize();
   clearBoard();
   changeDivStyle();
-  console.log(getUserSize());
 }
 
 etchASketch();
