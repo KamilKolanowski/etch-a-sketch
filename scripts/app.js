@@ -3,6 +3,7 @@ const squares = document.getElementsByClassName("square");
 const clearBtn = document.querySelector('.clear-button');
 const submitBtn = document.querySelector('.submit');
 const inputSizeValue = document.querySelector('.input-size');
+const rainbowModeBtn = document.querySelector('.rainbow-mode');
 
 function generateBoard(size) {
     for (let i = 0; i < size * size; i++) {
@@ -16,12 +17,28 @@ function generateBoard(size) {
     }
 }
 
-function changeDivStyle() {
+function changeDivStyle(color="black") {
   for (let div of squares) {
     div.addEventListener("mouseover", (e) => {
-      e.target.style.backgroundColor = "black";
+      const squareStyle = e.target;
+      color === 'black' ? squareStyle.style.backgroundColor = "black" : squareStyle.style.backgroundColor= generateRandomColor();
     });
   }
+}
+
+function generateRandomColor() {
+  const redVal = Math.floor(Math.random(255) * 100);
+  const greenVal = Math.floor(Math.random(255) * 100);
+  const blueVal = Math.floor(Math.random(255) * 100);
+  
+  return `rgb(${redVal}, ${greenVal}, ${blueVal})`;
+}
+
+function changePaintingColor() {
+  rainbowModeBtn.addEventListener('click', () => {
+    const color = generateRandomColor();
+    changeDivStyle(color);
+  });
 }
 
 function clearBoard() {
@@ -47,6 +64,8 @@ function drawUserSizeBoard() {
     
     generateBoard(userValue);
     changeDivStyle();
+
+    inputSizeValue.value = '';
   });
 }
 
@@ -54,8 +73,10 @@ function etchASketch() {
   clearBoardListener();
   generateBoard(16);
   drawUserSizeBoard();
+  changePaintingColor()
   clearBoard();
   changeDivStyle();
 }
 
 etchASketch();
+generateRandomColor()
